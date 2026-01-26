@@ -233,7 +233,7 @@ a:hover {
 
 /* Sections */
 .section {
-    padding: 60px 0;
+    padding: 40px 0;
 }
 
 .section-title {
@@ -241,7 +241,7 @@ a:hover {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 /* About Section */
