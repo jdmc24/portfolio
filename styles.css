@@ -417,6 +417,11 @@ a:hover {
     background: var(--color-background);
 }
 
+/* Philanthropy Section */
+.philanthropy {
+    background: var(--color-background);
+}
+
 /* Projects Section */
 .projects {
     background: var(--color-background);
