@@ -564,6 +564,29 @@ a:hover {
     opacity: 0.7;
 }
 
+.blog-post-link {
+    display: block;
+    padding: 24px;
+    background: var(--color-background-alt);
+    border-radius: 8px;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.blog-post-link:hover {
+    background: var(--color-border);
+}
+
+.blog-post-link h3 {
+    color: var(--color-text);
+    margin: 8px 0;
+}
+
+.blog-post-link p {
+    color: var(--color-text-light);
+    margin: 0;
+}
+
 .blog-post-placeholder .blog-post-date {
     font-size: 0.8rem;
     color: var(--color-text-light);

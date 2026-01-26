@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Learned Building My Marathon App | Jake McCorkle</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3RHST578DM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3RHST578DM');
+    </script>
+    <style>
+        .blog-post-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+        .blog-post-header {
+            margin-bottom: 40px;
+        }
+        .blog-post-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        .blog-post-meta {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+        .blog-post-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .blog-post-body p {
+            margin-bottom: 24px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        .blog-post-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .blog-post-body li {
+            margin-bottom: 12px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body strong {
+            color: var(--color-text);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo"><img src="../jm-logo.svg" alt="JM" class="nav-logo-img"></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#experience">Experience</a></li>
+                <li><a href="../index.html#education">Education</a></li>
+                <li><a href="../index.html#philanthropy">Philanthropy</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="blog-post-content">
+        <a href="../index.html#blog" class="back-link">&larr; Back to Blog</a>
+
+        <header class="blog-post-header">
+            <h1 class="blog-post-title">What I Learned Building My Marathon App</h1>
+            <p class="blog-post-meta">January 26, 2026</p>
+        </header>
+
+        <div class="blog-post-body">
+            <p>This project aims to solve a problem that I've experienced in the past. As a runner and (soon-to-be) marathoner, there are several races I would love to run someday. For many of them, however, entrance is highly competitive (World Majors, especially). With all of these races to consider, I've also missed the registration deadlines for some of my favorites. There's nothing like logging on 6 months before the Tokyo marathon is set to happen only to realize you missed the registration deadline. Better luck next year.</p>
+
+            <p>I used Claude Code to assist in building a dashboard to track sign-ups for marathons. Users can log in to see 700+ marathons (more are added daily via a scraping bot), sign up for their favorites, and integrate gmail accounts for live notifications and reminders. I outlined a few learnings below:</p>
+
+            <h2>Web scrapers breaking</h2>
+            <p>The original scrapers (marathon guide, runningintheusa, worlds marathons) all returned 0 results because websites had changed structure or were blocking requests.</p>
+
+            <h2>A better data source</h2>
+            <p>I found that FindMyMarathon.com uses schema.org structured markup, which made it much more reliable to scrape. This discovery enabled our list to grow from 30 seeded marathons to 747.</p>
+
+            <h2>API endpoints built</h2>
+            <ul>
+                <li>Marathons API (/api/marathons)</li>
+                <li>Scraping API (/api/scrape)</li>
+                <li>Auth API (/api/auth)</li>
+                <li>Reminders API (/api/reminders)</li>
+            </ul>
+
+            <h2>Design refresh</h2>
+            <p>The initial design for the app was generic. I suggested that Claude Code match the styling of Strava, the popular running app. CC suggested a change from a basic blue color scheme to an energetic orange palette and added Jakarta Sans font.</p>
+
+            <h2>Railway volume</h2>
+            <p>While pushing changes to the app to GitHub from the CLI, I encountered errors with data inconsistency. My marathon data that was available in a prior commit had disappeared. Adding a persistent volume mounted at /data within Railway solved the data loss issue. Without this change, the SQLite database was being wiped on every deployment since the Railway containers are ephemeral.</p>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Jake McCorkle. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
