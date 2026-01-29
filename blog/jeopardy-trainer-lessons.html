@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Learned Building My Jeopardy Trainer | Jake McCorkle</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3RHST578DM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3RHST578DM');
+    </script>
+    <style>
+        .blog-post-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+        .blog-post-header {
+            margin-bottom: 40px;
+        }
+        .blog-post-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        .blog-post-meta {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+        .blog-post-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .blog-post-body p {
+            margin-bottom: 24px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        .blog-post-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .blog-post-body li {
+            margin-bottom: 12px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body strong {
+            color: var(--color-text);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo"><img src="../jm-logo.svg" alt="JM" class="nav-logo-img"></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#experience">Experience</a></li>
+                <li><a href="../index.html#education">Education</a></li>
+                <li><a href="../index.html#philanthropy">Philanthropy</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="blog-post-content">
+        <a href="../index.html#blog" class="back-link">&larr; Back to Blog</a>
+
+        <header class="blog-post-header">
+            <h1 class="blog-post-title">What I Learned Building My Jeopardy Trainer</h1>
+            <p class="blog-post-meta">January 2026</p>
+        </header>
+
+        <div class="blog-post-body">
+            <p>[INTRO: Describe the problem you wanted to solve. Why did you build this? What's your connection to Jeopardy?]</p>
+
+            <p>[OVERVIEW: Brief description of what the app does and how you built it with Claude Code.]</p>
+
+            <h2>[Learning #1 Title]</h2>
+            <p>[Description of what you learned]</p>
+
+            <h2>[Learning #2 Title]</h2>
+            <p>[Description of what you learned]</p>
+
+            <h2>[Learning #3 Title]</h2>
+            <p>[Description of what you learned]</p>
+
+            <h2>Tech Stack</h2>
+            <ul>
+                <li>[Frontend technology]</li>
+                <li>[Backend technology]</li>
+                <li>[Database]</li>
+                <li>[Other tools/APIs]</li>
+            </ul>
+
+            <h2>[Learning #4 Title]</h2>
+            <p>[Description of what you learned]</p>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Jake McCorkle. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
