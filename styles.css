@@ -557,10 +557,17 @@ a:hover {
     grid-template-columns: 1fr 1fr;
     gap: 48px;
     align-items: start;
+    width: 100%;
 }
 
 .blog-posts {
     margin: 0;
+    width: 100%;
+}
+
+.blog-layout .reading-list {
+    margin: 0;
+    width: 100%;
 }
 
 .blog-post-placeholder {
