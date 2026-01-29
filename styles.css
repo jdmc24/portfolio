@@ -552,9 +552,15 @@ a:hover {
     font-size: 1.125rem;
 }
 
+.blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
 .blog-posts {
-    max-width: 500px;
-    margin: 0 auto 48px;
+    margin: 0;
 }
 
 .blog-post-placeholder {
@@ -573,8 +579,19 @@ a:hover {
     text-decoration: none;
 }
 
+.blog-post-link + .blog-post-link {
+    margin-top: 16px;
+}
+
 .blog-post-link:hover {
     background: var(--color-border);
+}
+
+.blog-post-link .blog-post-date {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .blog-post-link h3 {
@@ -607,8 +624,7 @@ a:hover {
 }
 
 .reading-list {
-    max-width: 500px;
-    margin: 0 auto 48px;
+    margin: 0;
 }
 
 .reading-list h3 {
@@ -773,6 +789,7 @@ a:hover {
 /* Contact Section */
 .contact {
     background: var(--color-background);
+    padding-top: 20px;
 }
 
 .contact-content {
@@ -934,6 +951,11 @@ a:hover {
 
     .blog-grid {
         grid-template-columns: 1fr;
+    }
+
+    .blog-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
     }
 }
 
