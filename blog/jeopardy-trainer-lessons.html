@@ -96,29 +96,29 @@
         </header>
 
         <div class="blog-post-body">
-            <p>[INTRO: Describe the problem you wanted to solve. Why did you build this? What's your connection to Jeopardy?]</p>
+            <p>I am a massive fan of the Jeopardy! trivia TV show. I have always been fascinated by the breadth and depth of the categories, and even more so by the contestants who conquer the show. I wanted to build an app with Claude Code that could simulate a real Jeopardy! game on my own computer, complete with scoring and voice integrations. I want to emphasize that this application was built for personal and educational purposes only.</p>
 
-            <p>[OVERVIEW: Brief description of what the app does and how you built it with Claude Code.]</p>
+            <p>Luckily, I was able to find an <a href="https://github.com/jwolle1/jeopardy_clue_dataset" target="_blank" rel="noopener noreferrer">open-sourced repo</a> of all the Jeopardy clues from 1984 to 2025.</p>
 
-            <h2>[Learning #1 Title]</h2>
-            <p>[Description of what you learned]</p>
+            <h2>Integrating the ElevenLabs API</h2>
+            <p>I wanted to use voice functionality to replicate the flow of the actual show: contestants "buzz in" with a response, and the host shares whether that response is correct or incorrect. After some research, I found that the best company that offered an API for this use case (text → speech) was ElevenLabs. So, I set up an account with ElevenLabs and generated an API key. I also specifically grabbed a "game show host"-like voice for the host, since we can't exactly replicate Ken Jennings' or Alex Trebek's voices for ethical reasons.</p>
 
-            <h2>[Learning #2 Title]</h2>
-            <p>[Description of what you learned]</p>
+            <h2>Web Speech API</h2>
+            <p>I wanted humans using the Jeopardy Trainer to be able to answer clues verbally, just like on the real show. Instead of using a third-party service, I found that modern browsers have a built-in Web Speech API that handles speech-to-text for free. To keep the code clean and reusable, I wrapped the browser API in a custom React hook (<code>useSpeechRecognition</code>) that exposes simple controls: <code>startListening</code>, <code>stopListening</code>, and a <code>transcript</code> that updates in real-time as the user speaks. Combined with ElevenLabs reading the clues aloud (text → speech), this speech → text experience with the browser's native Web Speech API creates a hands-free experience that closely mirrors the quick back-and-forth of the actual game.</p>
 
-            <h2>[Learning #3 Title]</h2>
-            <p>[Description of what you learned]</p>
+            <h2>Choosing the Right Claude Model</h2>
+            <p>For answer judging, I opted for Sonnet. Anthropic's three key models are Haiku, Sonnet, and Opus. Haiku is the cheapest and most frequently used for simple tasks with high volume. Opus has the most complex reasoning ability. Since all we needed from the Claude API call was to determine whether the user's response matched the correct response in the bank of information, I opted for the Sonnet model as a good balance of speed and quality, without using up too many tokens for each response.</p>
 
-            <h2>Tech Stack</h2>
-            <ul>
-                <li>[Frontend technology]</li>
-                <li>[Backend technology]</li>
-                <li>[Database]</li>
-                <li>[Other tools/APIs]</li>
-            </ul>
+            <h2>Era Selection</h2>
+            <p>This dataset includes data from 40 years. I don't have a lot of knowledge about events from the 1980s, so I know that I would personally be frustrated if I continuously received clues from that time period. For that reason, I filtered the data into a "classic" range from 1984–2009, and a modern era including content from 2010 up until July 2025.</p>
 
-            <h2>[Learning #4 Title]</h2>
-            <p>[Description of what you learned]</p>
+            <h2>Data Schema Updates</h2>
+            <p>During deployment, I noticed the app crashing repeatedly. The cause was that the app couldn't find categories with the expected clue values ($200, $400, $600, $800, $1000). The root cause was that Jeopardy doubled their dollar values in November 2001. So in the old format before 2001, dollar values in the first round were $100, $200, $300, $400, and $500. In the new format, dollar values in the first round were doubled to $200, $400, $600, $800, $1000. The code had to be updated to accept both value formats, then map them to standard display values. This also enabled the "classic era" feature to work properly.</p>
+
+            <h2>Deploying to Vercel</h2>
+            <p>My initial deployment failed with an error: "Serverless Function exceeded 250MB unzipped size." The culprits were the libraries <code>pandas</code> and <code>numpy</code>. I had been using these large data processing libraries to review the 40+ years of Jeopardy data on my local machine, but they had been bundled into each serverless function. I realized that these libraries were only needed for my local database seed script, not for runtime API calls. Removing pandas from the production <code>requirements.txt</code> fixed the issue. One takeaway from this experience was that it is key to keep dependencies minimal and truly question whether heavy libraries are actually needed at runtime.</p>
+
+            <p><em>All data is property of Jeopardy Productions, Inc. and protected under law. I am not affiliated with the show.</em></p>
         </div>
     </article>
 
