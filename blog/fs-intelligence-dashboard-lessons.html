@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Learned Building the FS Intelligence Dashboard | Jake McCorkle</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3RHST578DM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3RHST578DM');
+    </script>
+    <style>
+        .blog-post-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+        .blog-post-header {
+            margin-bottom: 40px;
+        }
+        .blog-post-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        .blog-post-meta {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+        .blog-post-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .blog-post-body p {
+            margin-bottom: 24px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        .blog-post-body ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .blog-post-body li {
+            margin-bottom: 12px;
+            color: var(--color-text-light);
+        }
+        .blog-post-body strong {
+            color: var(--color-text);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo"><img src="../jm-logo.svg" alt="JM" class="nav-logo-img"></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#experience">Experience</a></li>
+                <li><a href="../index.html#education">Education</a></li>
+                <li><a href="../index.html#philanthropy">Philanthropy</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="blog-post-content">
+        <a href="../index.html#blog" class="back-link">&larr; Back to Blog</a>
+
+        <header class="blog-post-header">
+            <h1 class="blog-post-title">What I Learned Building the FS Intelligence Dashboard</h1>
+            <p class="blog-post-meta">April 2026</p>
+        </header>
+
+        <div class="blog-post-body">
+            <p>I recently built the <a href="https://fs-intelligence-dashboard-vercel-kr35v9ygs.vercel.app/" target="_blank" rel="noopener noreferrer">FS Intelligence Dashboard</a>, a tool for tracking individual equities and relevant regulatory documents from the Federal Register. The project taught me a lot about deployment architecture, monorepo management, and the nuances of running a full-stack application across multiple cloud platforms.</p>
+
+            <h2>Why a Monorepo</h2>
+            <p>I chose to structure the project as a monorepo with <code>backend/</code> (FastAPI) and <code>frontend/</code> (Next.js) in a single repository. This keeps API contracts, shared environment examples, and deployment documentation in one place. One clone, one PR can touch both sides. When building with coding agents, a single tree often means less setup friction: the assistant can see both directories together without juggling two repos or cross-repo PRs. You can always split repos later if team or process needs demand it.</p>
+
+            <h2>Deployment Architecture: Railway + Vercel</h2>
+            <p>The goal was to host the app in production so users hit HTTPS URLs with the API running on a server, not my local machine. I chose Railway for the FastAPI backend and Vercel for the Next.js frontend. Railway is a good fit for a long-running FastAPI service with a predictable HTTP port and optional background work. Vercel is a good fit for Next.js (routing/SSR) and makes frontend deploys, previews, and rollbacks very easy.</p>
+
+            <p>Trying to force a "single provider" would either make the backend experience worse (shoehorning a long-running API into a frontend-first host) or make the frontend experience worse (losing Vercel's Next.js-native workflow). Sometimes the right answer is using the best tool for each job.</p>
+
+            <h2>Monorepo Configuration Challenges</h2>
+            <p>Monorepos introduce their own complexity. The root directory matters differently for Railway's service root versus Vercel's root directory setting. Config-as-code paths can be non-obvious. I also learned that the Vercel project is tied to one Git repo, so if you have duplicate projects, you need to verify the Deployments tab to see which project actually uses the correct GitHub connection. GitHub App repository access must include the repo you want; otherwise it won't appear in the connect picker.</p>
+
+            <h2>The Federal Register Pipeline</h2>
+            <p>The data pipeline has two distinct phases: ingest and enrich. Ingest pulls raw Federal Register documents. Enrich adds summaries, severity ratings, and tags using Claude via the Anthropic API. Keeping these separate made it easier to reason about costs, rate limits, retries, and when to run scheduled jobs.</p>
+
+            <h2>Persistence with SQLite</h2>
+            <p>I used SQLite for data storage locally, with a persisted volume recommended for production. One lesson learned: SQLite can reset on redeploy without a mounted volume and an absolute <code>DATABASE_URL</code> path.</p>
+
+            <h2>What I'd Improve Next</h2>
+            <p>Looking ahead, there's room to improve reliability, observability (logs, metrics, traces), security (token rotation, least privilege, secrets hygiene), and UX (empty states, progress indicators, error messages). Each of these would make the system more production-ready and easier to maintain over time.</p>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Jake McCorkle. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
