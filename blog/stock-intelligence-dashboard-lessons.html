@@ -96,7 +96,7 @@
         </header>
 
         <div class="blog-post-body">
-            <p>I recently built the <a href="https://fs-intelligence-dashboard-vercel-kr35v9ygs.vercel.app/" target="_blank" rel="noopener noreferrer">Stock Intelligence Dashboard</a> with Cursor, a tool for tracking individual equities and relevant regulatory documents from the Federal Register. The project taught me a lot about deployment architecture, monorepo management, and the nuances of running a full-stack application across multiple cloud platforms.</p>
+            <p>I recently built the <a href="https://stock-intelligence.io/" target="_blank" rel="noopener noreferrer">Stock Intelligence Dashboard</a> with Cursor, a tool for tracking individual equities and relevant regulatory documents from the Federal Register. The project taught me a lot about deployment architecture, monorepo management, and the nuances of running a full-stack application across multiple cloud platforms.</p>
 
             <h2>Why a Monorepo</h2>
             <p>I chose to structure the project as a monorepo with <code>backend/</code> (FastAPI) and <code>frontend/</code> (Next.js) in a single repository. This keeps API contracts, shared environment examples, and deployment documentation in one place. One clone, one PR can touch both sides. When building with coding agents, a single tree often means less setup friction: the assistant can see both directories together without juggling two repos or cross-repo PRs. You can always split repos later if team or process needs demand it.</p>
