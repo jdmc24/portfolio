@@ -336,6 +336,16 @@ a:hover {
     margin: 0 auto;
 }
 
+.experience-ey-note {
+    max-width: 700px;
+    margin: 0 auto 32px;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    font-style: italic;
+    border-left: 2px solid var(--color-border);
+    padding-left: 12px;
+}
+
 .experience-item {
     padding-bottom: 40px;
     margin-bottom: 40px;
