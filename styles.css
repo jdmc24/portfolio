@@ -608,6 +608,10 @@ a:hover {
     margin-top: 16px;
 }
 
+.blog-post-placeholder + .blog-post-link {
+    margin-top: 16px;
+}
+
 .blog-post-link:hover {
     background: var(--color-border);
 }
